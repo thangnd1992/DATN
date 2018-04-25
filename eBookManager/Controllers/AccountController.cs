@@ -92,15 +92,31 @@ namespace eBookManager.Controllers
         [AllowAnonymous]
         public ActionResult GetAllAccounts(string search, int page = 1, int pageSize = 10)
         {
-            var accounts = _accDao.ListAllPaging(search, page, pageSize);
-            ViewBag.SearchString = search;
-            return View(accounts);
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var accounts = _accDao.ListAllPaging(search, page, pageSize);
+                ViewBag.SearchString = search;
+                return View(accounts);
+            }
+
         }
         [AllowAnonymous]
         public ActionResult EditAccount(int accountId)
         {
-            var account = _accDao.GetAccountById(accountId);
-            return View(account);
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var account = _accDao.GetAccountById(accountId);
+                return View(account);
+            }
+            
         }
         [HttpPost]
         [AllowAnonymous]
@@ -112,7 +128,15 @@ namespace eBookManager.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            return View(new Account());
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return View(new Account());
+            }
+            
         }
         [HttpPost]
         [AllowAnonymous]
@@ -130,6 +154,39 @@ namespace eBookManager.Controllers
             acc.Status = "disable";
             var account = _accDao.UpdateAccount(acc);
             return Json(account);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ChangePassword()
+        {
+
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var account = (Account)Session["CurrentAccount"];                
+                return View(account);
+            }
+            
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ChangePassword(string Password)
+        {
+            var acc = (Account)Session["CurrentAccount"];
+            acc.Password = Encrypt.GetMD5(Password);
+            var account = _accDao.UpdateAccount(acc);
+            return View(account);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            Session["CurrentAccount"] = null;
+            return Json("Bạn đã đăng xuất thành công!");
         }
     }
 }

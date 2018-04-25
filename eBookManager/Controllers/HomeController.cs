@@ -16,7 +16,6 @@ namespace eBookManager.Controllers
             }
             else
             {
-
                 return View();
             }
         }

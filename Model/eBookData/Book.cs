@@ -1,4 +1,4 @@
-namespace Model.eBookData
+﻿namespace Model.eBookData
 {
     using System;
     using System.Collections.Generic;
@@ -12,9 +12,11 @@ namespace Model.eBookData
         public int Id { get; set; }
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Mã sách không được để trống!")]
         public string BookCode { get; set; }
 
         [StringLength(250)]
+        [Required(ErrorMessage = "Tên sách không được để trống!")]
         public string BookName { get; set; }
 
         [StringLength(250)]
