@@ -56,18 +56,29 @@ namespace eBookManager.Controllers
         //
         // GET: /Manage/Index
         [AllowAnonymous]
-        public async Task<ActionResult> Index(string query, DateTime? borrowOnMin, DateTime? borrowOnMax, DateTime? payOnMin, DateTime? payOnMax)
+        public ActionResult GetBookBorrows(string query, string borrowOnMin, string borrowOnMax)
         {
             var account = (Account)Session["CurrentAccount"];
-            borrowOnMin = borrowOnMin == null ? DateTime.Now.AddMonths(-1) : borrowOnMin;
-            borrowOnMin = borrowOnMax == null ? DateTime.Now : borrowOnMin;
-            var bookManager = _bookManagerDao.GetBookManagerBorrows(account.Id, borrowOnMin, borrowOnMax, 1);
+            var borrowMin = borrowOnMin == null ? DateTime.Now.AddMonths(-1) : DateTime.ParseExact(borrowOnMin,"dd/MM/yyyy",null);
+            var borrowMax = borrowOnMax == null ? DateTime.Now : DateTime.ParseExact(borrowOnMax, "dd/MM/yyyy", null).AddHours(23); 
+            var bookManager = _bookManagerDao.GetBookManagerBorrows(query, borrowMin, borrowMax, 1);
             ViewBag.SearchString = query;
-            ViewBag.borrowOnMin = borrowOnMin;
-            ViewBag.borrowOnMax = borrowOnMax;
+            ViewBag.borrowOnMin = borrowMin.ToString("dd/MM/yyyy");
+            ViewBag.borrowOnMax = borrowMax.ToString("dd/MM/yyyy");
             return View(bookManager);
         }
-
+        [AllowAnonymous]
+        public ActionResult GetBookReturns(string query, string payOnMin, string payOnMax)
+        {
+            var account = (Account)Session["CurrentAccount"];
+            var payMin = payOnMin == null ? DateTime.Now.AddMonths(-1) : DateTime.ParseExact(payOnMin, "dd/MM/yyyy", null);
+            var payMax = payOnMax == null ? DateTime.Now : DateTime.ParseExact(payOnMax, "dd/MM/yyyy", null).AddHours(23);
+            var bookManager = _bookManagerDao.GetBookManagerPays(query, payMin, payMax, 1);
+            ViewBag.SearchString = query;
+            ViewBag.payOnMin = payMin.ToString("dd/MM/yyyy");
+            ViewBag.payOnMax = payMax.ToString("dd/MM/yyyy");
+            return View(bookManager);
+        }
 
         // POST: /Manage/RemoveLogin
         [HttpPost]

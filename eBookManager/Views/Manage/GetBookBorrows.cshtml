@@ -1,0 +1,114 @@
+﻿@model PagedList.IPagedList<Model.eBookData.BookManager>
+@using PagedList.Mvc;
+
+    @{
+        ViewBag.Title = "";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+
+        var account = (Model.eBookData.Account)Session["CurrentAccount"];
+    }
+    <h2 class="margin-bot-20" style="text-align:center">Thống kê mượn sách</h2>
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+    @using (Html.BeginForm("GetBookBorrows", "Manage", FormMethod.Get))
+    {
+        <input type="text" value="@ViewBag.SearchString" class="form-control" name="query" style="width:300px;float:left;margin-right:15px" placeholder="Tìm theo tên người mượn" />
+        <label style="float:left;margin-right:15px;margin-top:8px">Từ ngày</label>
+        <input type="text" value="@ViewBag.borrowOnMin" class="form-control datepicker" name="borrowOnMin" style="width:200px;float:left;margin-right:15px">
+        <label style="float:left;margin-right:15px;margin-top:8px">Đến ngày</label>
+        <input type="text" value="@ViewBag.borrowOnMax" class="form-control datepicker" name="borrowOnMax" style="width:200px;float:left;margin-right:15px">
+        <button type="submit" class="btn btn-success">Tìm kiếm</button>
+    }
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Người dùng</th>
+                <th>Tên sách</th>
+                <th>Ngày mượn</th>
+                <th>Ngày trả</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                if (account.Role != "admin")
+                {
+                    @*<tr>
+                            <td>@(i + 1)</td>
+                            <td>@item.BookCode</td>
+                            <td>@item.BookName.</td>
+                            <td>@item.BookAuthor</td>
+                            <td>@item.BookType</td>
+                            <td>@item.BookPublisher</td>
+                            <td>@item.BookNote</td>
+                            <td>
+                                <a class="btn btn-success" onclick="openPopupBorrowBook(@item.Id)">Mượn sách</a>
+                                <a class="btn btn-danger" onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
+                            </td>
+                        </tr>
+                        break;*@
+                }
+                else
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@item.Name</td>
+                        <td>@item.BookName</td>
+                        <td>@item.BorrowOn.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@(item.PayOn == null ? "" : item.PayOn.Value.ToString("dd/MM/yyyy"))</td>
+
+                    </tr>
+                }
+
+            }
+
+        </tbody>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @query = @ViewBag.SearchString, @borrowOnMin = @ViewBag.borrowOnMin, @borrowOnMax = @ViewBag.borrowOnMax }))
+    </table>
+    <div class="modal fade" id="borrowBook" tabindex="-1" role="dialog" aria-labelledby="borrowBookLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn có muốn mượn cuốn sách này?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Chọn đồng ý nếu bạn muốn mượn.</div>
+                <input hidden id="bookId" />
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <a class="btn btn-primary" onclick="borrowBook()">Đồng ý</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="returnBook" tabindex="-1" role="dialog" aria-labelledby="returnBookLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Bạn có muốn trả cuốn sách này?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Chọn đồng ý nếu bạn muốn trả.</div>
+                <input hidden id="bookId" />
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <a class="btn btn-primary" onclick="returnBook()">Đồng ý</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+            });
+        });
+    </script>

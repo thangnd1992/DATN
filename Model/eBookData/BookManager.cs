@@ -21,5 +21,7 @@ namespace Model.eBookData
         public DateTime? BorrowOn { get; set; }
 
         public DateTime? PayOn { get; set; }
+        public string Name { get; set; }
+        public string BookName { get; set; }
     }
 }

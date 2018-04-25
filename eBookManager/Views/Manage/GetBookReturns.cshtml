@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<Model.eBookData.BookManager>
+@using PagedList.Mvc;
+
+    @{
+        ViewBag.Title = "";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+
+        var account = (Model.eBookData.Account)Session["CurrentAccount"];
+    }
+    <h2 class="margin-bot-20" style="text-align:center">Thống kê trả sách</h2>
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+    @using (Html.BeginForm("GetBookReturns", "Manage", FormMethod.Get))
+    {
+        <input type="text" value="@ViewBag.SearchString" class="form-control" name="query" style="width:300px;float:left;margin-right:15px" placeholder="Tìm theo tên người mượn" />
+        <label style="float:left;margin-right:15px;margin-top:8px">Từ ngày</label>
+        <input type="text" value="@ViewBag.payOnMin" class="form-control datepicker" name="payOnMin" style="width:200px;float:left;margin-right:15px">
+        <label style="float:left;margin-right:15px;margin-top:8px">Đến ngày</label>
+        <input type="text" value="@ViewBag.payOnMax" class="form-control datepicker" name="payOnMax" style="width:200px;float:left;margin-right:15px">
+        <button type="submit" class="btn btn-success">Tìm kiếm</button>
+    }
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Người dùng</th>
+                <th>Tên sách</th>
+                <th>Ngày mượn</th>
+                <th>Ngày trả</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                if (account.Role != "admin")
+                {
+                    @*<tr>
+                            <td>@(i + 1)</td>
+                            <td>@item.BookCode</td>
+                            <td>@item.BookName.</td>
+                            <td>@item.BookAuthor</td>
+                            <td>@item.BookType</td>
+                            <td>@item.BookPublisher</td>
+                            <td>@item.BookNote</td>
+                            <td>
+                                <a class="btn btn-success" onclick="openPopupBorrowBook(@item.Id)">Mượn sách</a>
+                                <a class="btn btn-danger" onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
+                            </td>
+                        </tr>
+                        break;*@
+                }
+                else
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@item.Name</td>
+                        <td>@item.BookName</td>
+                        <td>@item.BorrowOn.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@(item.PayOn == null ? "" : item.PayOn.Value.ToString("dd/MM/yyyy"))</td>
+
+                    </tr>
+                }
+
+            }
+
+        </tbody>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @query = @ViewBag.SearchString, @payOnMin = @ViewBag.payOnMin, @payOnMax = @ViewBag.payOnMax }))
+    </table>
+<script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+            });
+        });
+</script>

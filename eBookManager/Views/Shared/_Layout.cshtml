@@ -17,6 +17,8 @@
     <link href="/Assets/Layout/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="/Assets/Layout/css/sb-admin.css" rel="stylesheet">
+    <link href="~/Assets/css/datepicker.css" rel="stylesheet" />
+    <script src="~/Assets/Scripts/bootstrap-datepicker.js"></script>
     @{ 
         var account = (Model.eBookData.Account)Session["CurrentAccount"];
         var checkAdmin = account.Role != "admin";
@@ -50,9 +52,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="navbar.html">
+                            <a href="/Manage/GetBookBorrows">
                                 <i class="fa fa-fw fa-area-chart"></i>
-                                <span>Mượn Trả Sách</span>
+                                <span>Mượn Sách</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Manage/GetBookReturns">
+                                <i class="fa fa-fw fa-area-chart"></i>
+                                <span>Trả Sách</span>
                             </a>
                         </li>
                     </ul>
@@ -75,12 +83,12 @@
                                 <span>Thêm Sách</span>
                             </a>
                         </li>
-                        <li @if (checkAdmin) { <text> hidden</text> }>
+                        @*<li @if (checkAdmin) { <text> hidden</text> }>
                             <a href="navbar.html">
                                 <i class="fa fa-fw fa-book"></i>
                                 <span>Mượn/Trả Sách</span>
                             </a>
-                        </li>
+                        </li>*@
                         @*<li @if (checkAdmin) {<text>hidden</text> }>
                             <a href="navbar.html">
                                 <i class="fa fa-fw fa-book"></i>
