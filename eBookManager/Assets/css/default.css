@@ -14,3 +14,6 @@ body.fixed-nav{
 .pad-top-8{
     padding-top:8px;
 }
+.required{
+    color:red;
+}

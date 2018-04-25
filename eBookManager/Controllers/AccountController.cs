@@ -12,6 +12,7 @@ using eBookManager.Models;
 using Model.eBookData;
 using Model.eBookDao;
 using System.Collections.Generic;
+using eBookManager.Common;
 
 namespace eBookManager.Controllers
 {
@@ -74,7 +75,8 @@ namespace eBookManager.Controllers
         {
 
             Account acc = new Account();
-            var check = _accDao.Login(userName, password);
+            var passwordSalt = Encrypt.GetMD5(password);
+            var check = _accDao.Login(userName, passwordSalt);
             if (check)
             {
 
@@ -88,9 +90,9 @@ namespace eBookManager.Controllers
             }
         }
         [AllowAnonymous]
-        public ActionResult GetAllAccounts( string search, int page=1, int pageSize = 10)
+        public ActionResult GetAllAccounts(string search, int page = 1, int pageSize = 10)
         {
-            var accounts = _accDao.ListAllPaging(search,page,pageSize);
+            var accounts = _accDao.ListAllPaging(search, page, pageSize);
             ViewBag.SearchString = search;
             return View(accounts);
         }
@@ -116,6 +118,7 @@ namespace eBookManager.Controllers
         [AllowAnonymous]
         public ActionResult Create(Account acc)
         {
+            acc.Password = Common.Encrypt.GetMD5(acc.Password);
             var account = _accDao.InsertAccount(acc);
             return View(account);
         }
