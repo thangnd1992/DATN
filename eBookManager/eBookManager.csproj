@@ -215,6 +215,7 @@
     <Compile Include="Common\QRHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1595,6 +1596,9 @@
     <Content Include="Views\Book\EditBook.cshtml" />
     <Content Include="Views\Book\GetAllBooks.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Class\Create.cshtml" />
+    <Content Include="Views\Class\EditClass.cshtml" />
+    <Content Include="Views\Class\GetAllClasss.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
