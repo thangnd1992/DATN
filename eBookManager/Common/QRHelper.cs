@@ -18,6 +18,7 @@ namespace eBookManager.Common
             var qrWriter = new BarcodeWriter();
             qrWriter.Format = BarcodeFormat.QR_CODE;
             qrWriter.Options = new EncodingOptions() { Height = height, Width = width, Margin = margin };
+            qrWriter.Options.Hints[EncodeHintType.CHARACTER_SET] = "UTF-8";
 
             using (var q = qrWriter.Write(data))
             {
