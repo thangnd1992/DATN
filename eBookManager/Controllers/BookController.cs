@@ -62,15 +62,31 @@ namespace eBookManager.Controllers
         [AllowAnonymous]
         public ActionResult GetAllBooks(string search, int page = 1, int pageSize = 10)
         {
-            var Books = _bookDao.ListAllPaging(search, page, pageSize);
-            ViewBag.SearchString = search;
-            return View(Books);
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var Books = _bookDao.ListAllPaging(search, page, pageSize);
+                ViewBag.SearchString = search;
+                return View(Books);
+            }
+
         }
         [AllowAnonymous]
         public ActionResult EditBook(int BookId)
         {
-            var Book = _bookDao.GetBookById(BookId);
-            return View(Book);
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var Book = _bookDao.GetBookById(BookId);
+                return View(Book);
+            }
+            
         }
         [HttpPost]
         [AllowAnonymous]
@@ -82,7 +98,15 @@ namespace eBookManager.Controllers
         [AllowAnonymous]
         public ActionResult Create()
         {
-            return View(new Book());
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                return View(new Book());
+            }
+            
         }
         [HttpPost]
         [AllowAnonymous]

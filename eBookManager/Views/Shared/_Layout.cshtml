@@ -156,15 +156,21 @@
                         <li>
                             <a href="navbar.html">
                                 <i class="fa fa-fw fa-wrench"></i>
-                                <span>Cài Đặt Tài Khoản</span>
+                                <span>Thông tin tài khoản</span>
                             </a>
                         </li>
                         <li>
-                            <a href="navbar.html">
+                            <a href="/Account/ChangePassword">
                                 <i class="fa fa-fw fa-cog"></i>
-                                <span>Cài Đặt Khác</span>
+                                <span>Thay đổi mật khẩu</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="/Class/GetAllClasss">
+                                <i class="fa fa-fw fa-cog"></i>
+                                <span>Quản lý lớp học</span>
+                            </a>
+                        </li>                       
                     </ul>
                 </li>
             </ul>
@@ -276,10 +282,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <a class="nav-link" data-toggle="modal" onclick="openPopupLogout()">
                         <i class="fa fa-fw fa-sign-out"></i>Đăng Xuất
-                    </a>
+                    </a>                    
                 </li>
+                
             </ul>
         </div>
     </nav>
@@ -292,7 +299,7 @@
         <footer class="sticky-footer">
             <div class="container">
                 <div class="text-center">
-                    <small>Copyright © Tran Duc Bien 2018.</small>
+                    <small>Copyright © DATN - Tran Duc Bien 2018.</small>
                 </div>
             </div>
         </footer>
@@ -313,7 +320,7 @@
                     <div class="modal-body">Chọn đăng xuất nếu bạn muốn thoát khỏi trang.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                        <a class="btn btn-primary" href="/Account/Login">Đăng xuất</a>
+                        <a class="btn btn-primary" onclick="logout()">Đăng xuất</a>
                     </div>
                 </div>
             </div>
@@ -338,3 +345,27 @@
 </body>
 
 </html>
+
+<script>
+    function openPopupLogout(id) {
+        $('#exampleModal').modal('show');
+    }
+    function logout() {
+        $.ajax({
+            type: "POST",
+            url: '/Account/Logout',
+            dataType: "json",
+            success: function (response) {
+                $('#exampleModal').modal('hide');
+
+                setTimeout(function () {
+                    //alert(response);
+                    window.location.href = "/Account/Login";
+                }, 500);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+</script>

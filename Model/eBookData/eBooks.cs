@@ -14,6 +14,7 @@ namespace Model.eBookData
 
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Book> Book { get; set; }
+        public virtual DbSet<Class> Class { get; set; }
         public virtual DbSet<BookManager> BookManager { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<Model.eBookData.Class>
+@using PagedList.Mvc;
+@using eBookManager.Common;
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var account = (Model.eBookData.Account)Session["CurrentAccount"];
+}
+<h2 class="margin-bot-20" style="text-align:center">Danh sách các lớp học</h2>
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+@using (Html.BeginForm("GetAllClasss", "Class", FormMethod.Get))
+{
+    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px"/>
+    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+    <a href="/Class/Create" class="btn btn-success">Thêm mới</a>
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã lớp</th>
+            <th>Tên lớp</th>
+            <th>Trạng thái</th>
+            <th style="text-align:center">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                if (account.Role != "admin")
+                {
+                    <tr>
+                        <td>@(i+1)</td>
+                        <td>@item.ClassCode</td>
+                        <td>@item.ClassName</td>
+                        <td>@item.ClassStatus</td>
+                    </tr>
+                break;
+                }
+                else
+                {
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@item.ClassCode</td>
+                        <td>@item.ClassName</td>
+                        <td>@item.ClassStatus</td>
+                        <td>
+                            <a class="btn btn-primary" href="/Class/EditClass?classId=@item.Id">Sửa</a>
+                        </td>                                                   
+                    </tr>
+                }
+
+        }
+
+    </tbody>
+    @Html.PagedListPager(Model, page => Url.Action("GetAllClasss", new { page, @search = @ViewBag.SearchString }))
+</table>
+<script>
+    function openPopupBorrowBook (id){
+        $('#borrowBook').modal('show');
+        $('#bookId').val(id);
+    }
+    function borrowBook() {
+        var bookId = $('#bookId').val();
+        $.ajax({
+            type: "POST",
+            url: '/Book/BorrowBook',
+            data: {
+                bookId: bookId
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#borrowBook').modal('hide');
+                
+                setTimeout(function(){
+                    alert(response);
+                }, 500);
+            },
+            error: function (error) {
+                
+            }
+        });
+    }
+
+    function openPopupReturnBook (id){
+        $('#returnBook').modal('show');
+        $('#bookId').val(id);
+    }
+    function returnBook() {
+        var bookId = $('#bookId').val();
+        $.ajax({
+            type: "POST",
+            url: '/Book/PayBook',
+            data: {
+                bookId: bookId
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#returnBook').modal('hide');
+                
+                setTimeout(function(){
+                    alert(response);
+                }, 500);
+            },
+            error: function (error) {
+                
+            }
+        });
+    }
+
+    function openPopupQRCode(id) {
+        $('#showQrCode-'+id).modal('show');
+    }
+</script>
