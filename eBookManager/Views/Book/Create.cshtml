@@ -1,0 +1,52 @@
+﻿@model Model.eBookData.Book
+@{
+    ViewBag.Title = "Thêm mới sách";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="margin-bot-20" style="text-align:center">Thêm mới Sách</h2>
+
+<form action="/Book/Create" method="post">
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Mã sách</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.BookCode" name="BookCode" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Tên sách</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.BookName" name="BookName" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Tác giả</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.BookAuthor" name="BookAuthor" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Loại sách</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.BookType" name="BookType"/>
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Nhà xuất bản</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.BookPublisher" name="BookPublisher"/>
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Ghi chú</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.BookNote" name="BookNote"/>
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8"></label></div>
+        <div style="float:left;width:300px">
+            <button class="btn btn-primary pull-right" type="submit">Thêm mới</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+﻿@model Model.eBookData.Account
+@{
+    ViewBag.Title = "EditAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="margin-bot-20" style="text-align:center">Cập nhật tài khoản</h2>
+
+<form action="/Account/EditAccount" method="post">
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Tên</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.UserName" name="UserName" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Email</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.Email" name="Email" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Địa chỉ</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.Address" name="Address" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Lớp</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.ClassId" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8">Quyền</label></div>
+        <div class="col-lg-8">
+            <input class="form-control width-300" type="text" value="@Model.Role" />
+        </div>
+    </div>
+    <div class="col-lg-12 margin-bot-20">
+        <div class="col-lg-4"><label class="pull-right pad-top-8"></label></div>
+        <div style="float:left;width:300px">
+            <button class="btn btn-primary pull-right" type="submit">Cập nhật</button>
+        </div>
+    </div>
+</form>

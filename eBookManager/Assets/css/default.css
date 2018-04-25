@@ -1,0 +1,16 @@
+﻿
+.navbar{
+    margin-bottom: 0px !important;
+}
+body.fixed-nav{
+         padding-top: 0px !important; 
+}
+.margin-bot-20{
+    margin-bottom:20px;
+}
+.width-300{
+    width:300px;
+}
+.pad-top-8{
+    padding-top:8px;
+}

@@ -1,0 +1,131 @@
+﻿@model PagedList.IPagedList<Model.eBookData.Account>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var account = (Model.eBookData.Account)Session["CurrentAccount"];
+}
+<h2 class="margin-bot-20" style="text-align:center">Danh sách người dùng</h2>
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+@using (Html.BeginForm("GetAllAccounts", "Account", FormMethod.Get))
+{
+    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px"/>
+    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Lớp</th>
+            @if (account.Role == "admin")
+            {
+                <th>Quyền</th>
+                <th>Trạng thái</th>
+            }
+
+            <th style="text-align:center">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                if (account.Role != "admin")
+                {
+                <tr>
+                    <td>1</td>
+                    <td>@account.Name</td>
+                    <td>@account.UserName</td>
+                    <td>@account.Email</td>
+                    <td>@account.Address</td>
+                    <td>@account.ClassId</td>
+                    <td>
+                        <a class="btn btn-primary" href="/Account/EditAccount?accountId=@item.Id">Sửa</a>
+                        @*<a class="btn btn-danger">Khóa tài khoản</a>*@
+                    </td>
+                </tr>
+                break;
+            }
+            else
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@item.Name</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                    <td>@item.Address</td>
+                    <td>@item.ClassId</td>
+                    <td>@item.Role</td>
+                    <td>
+                        @if (item.Status == "active    ")
+                        {
+                            <span>Đang hoạt động</span>
+                        }
+                        else
+                        {
+                            <span>Ngừng hoạt động</span>
+                        }
+                    </td>
+                    <td style="text-align:center">
+                        <a class="btn btn-primary" href="/Account/EditAccount?accountId=@item.Id">Cập nhật</a>
+                        <a class="btn btn-danger" @*data-toggle="modal" data-target="#disableAccount"*@ onclick="openPopupDisableAccount(@item.Id)">Khóa tài khoản</a>
+                    </td>
+                </tr>
+            }
+
+        }
+
+    </tbody>
+    @Html.PagedListPager(Model, page => Url.Action("GetAllAccounts", new { page, @search = @ViewBag.SearchString }))
+</table>
+<div class="modal fade" id="disableAccount" tabindex="-1" role="dialog" aria-labelledby="disableAccountLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Bạn muốn khóa tài khoản này?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Chọn đồng ý nếu bạn muốn khóa tài khoản.</div>
+            <input hidden id="accountId" />
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                <a class="btn btn-primary" onclick="disableAccount()">Đồng ý</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function openPopupDisableAccount (id){
+        $('#disableAccount').modal('show');
+        $('#accountId').val(id);
+    }
+    function disableAccount() {
+        var accountId = $('#accountId').val();
+        $.ajax({
+            type: "POST",
+            url: '/Account/DisableAccount',
+            data: {
+                accountId: accountId
+            },
+            dataType: "json",
+            success: function (response) {
+                $('#disableAccount').modal('hide');
+                setTimeout(function(){
+                    location.reload();
+                }, 1000);
+            },
+            error: function (error) {
+                
+            }
+        });
+    }
+</script>
