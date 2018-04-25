@@ -13,7 +13,7 @@
 </p>*@
 @using (Html.BeginForm("GetAllClasss", "Class", FormMethod.Get))
 {
-    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px"/>
+    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px" placeholder="Tìm theo mã lớp hoặc tên lớp"/>
     <button type="submit" class="btn btn-success">Tìm kiếm</button>
     <a href="/Class/Create" class="btn btn-success">Thêm mới</a>
 }

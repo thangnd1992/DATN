@@ -122,6 +122,10 @@ namespace eBookManager.Controllers
         [AllowAnonymous]
         public ActionResult EditAccount(Account acc)
         {
+            var ac = _accDao.GetAccountById(acc.Id);
+            acc.Password = ac.Password;
+            acc.Status = ac.Status;
+            acc.UserName = ac.UserName;
             var account = _accDao.UpdateAccount(acc);
             return View(account);
         }
