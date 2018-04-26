@@ -104,7 +104,7 @@
                         </li>*@
                     </ul>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản Lý Người Dùng">
+                <li @if (checkAdmin) { <text> hidden</text> } class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản Lý Người Dùng">
                     <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseUsers" data-parent="#exampleAccordion">
                         <i class="fa fa-fw fa-users"></i>
                         <span class="nav-link-text">Quản Lý Người Dùng</span>

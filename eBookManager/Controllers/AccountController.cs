@@ -202,8 +202,9 @@ namespace eBookManager.Controllers
             }
             else
             {
-                var account = Session["CurrentAccount"];
-                return View(account);
+                var account = (Account)Session["CurrentAccount"];
+                var info = _accDao.GetAccountById(account.Id);
+                return View(info);
             }
 
         }
