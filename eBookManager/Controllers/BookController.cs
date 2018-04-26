@@ -148,7 +148,7 @@ namespace eBookManager.Controllers
             bookManager.AccountId = account.Id;
             bookManager.BookId = bookId;
             var result = _bookManagerDao.PayBook(bookManager);
-            return Json("Bạn đã mượn thành công cuốn sách này");
+            return Json("Bạn đã trả thành công cuốn sách này");
         }
     }
 }

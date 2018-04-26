@@ -234,6 +234,7 @@
     <Content Include="Assets\EmailTemplates\header-footer-image.png" />
     <Content Include="Assets\EmailTemplates\header-image.png" />
     <Content Include="Assets\EmailTemplates\text-only.png" />
+    <Content Include="Assets\Images\1.png" />
     <Content Include="Assets\Images\general.png" />
     <Content Include="Assets\Images\logo-Login.png" />
     <Content Include="Assets\Images\logo-sub.png" />
@@ -1602,6 +1603,7 @@
     <Content Include="Views\Class\EditClass.cshtml" />
     <Content Include="Views\Class\GetAllClasss.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\AccountInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,9 +8,6 @@
     var account = (Model.eBookData.Account)Session["CurrentAccount"];
 }
 <h2 class="margin-bot-20" style="text-align:center">Danh sách Tài liệu trong thư viện</h2>
-@*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
 @using (Html.BeginForm("GetAllBooks", "Book", FormMethod.Get))
 {
     <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px" placeholder="Tìm theo mã sách hoặc tên sách" />
@@ -48,7 +45,7 @@
                         <a class="btn btn-danger" onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
                     </td>
                 </tr>
-                break;
+                //break;
             }
             else
             {
@@ -64,7 +61,7 @@
                         <a class="btn btn-primary" href="/Book/EditBook?bookId=@item.Id">Sửa</a>
                     </td>
                     <td style="text-align:center">
-                        <a class="btn btn-success" onclick="openPopupQRCode(@item.Id)">Hiển thị QRCODE</a>
+                            <a class="btn btn-success" onclick="openPopupQRCode(@item.Id)">QRCODE</a>
                         <a class="btn btn-success" onclick="openPopupBorrowBook(@item.Id)">Mượn sách</a>
                         <a class="btn btn-danger" onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
                         <div hidden class="qrcode-@item.Id">@Html.GenerateQrCode(@item.BookCode + "--" + @item.BookName)</div>
