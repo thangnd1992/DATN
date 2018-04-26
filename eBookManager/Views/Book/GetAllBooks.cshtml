@@ -13,7 +13,7 @@
 </p>*@
 @using (Html.BeginForm("GetAllBooks", "Book", FormMethod.Get))
 {
-    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px"/>
+    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px" placeholder="Tìm theo mã sách hoặc tên sách"/>
     <button type="submit" class="btn btn-success">Tìm kiếm</button>
 }
 <table class="table table-hover">

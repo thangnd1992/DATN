@@ -40,7 +40,7 @@ namespace Model.eBookDao
             account.Role = acc.Role;
             account.UserName = acc.UserName;
             account.Name = acc.Name;
-            acc.Status = acc.Status;
+            account.Status = acc.Status;
             eb.SaveChanges();
 
             return acc;

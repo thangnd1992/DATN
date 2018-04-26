@@ -122,6 +122,10 @@ namespace eBookManager.Controllers
         [AllowAnonymous]
         public ActionResult EditAccount(Account acc)
         {
+            var ac = _accDao.GetAccountById(acc.Id);
+            acc.Password = ac.Password;
+            acc.Status = ac.Status;
+            acc.UserName = ac.UserName;
             var account = _accDao.UpdateAccount(acc);
             return View(account);
         }
@@ -187,6 +191,22 @@ namespace eBookManager.Controllers
         {
             Session["CurrentAccount"] = null;
             return Json("Bạn đã đăng xuất thành công!");
+        }
+
+        [AllowAnonymous]
+        public ActionResult AccountInfo()
+        {
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var account = (Account)Session["CurrentAccount"];
+                var info = _accDao.GetAccountById(account.Id);
+                return View(info);
+            }
+
         }
     }
 }
