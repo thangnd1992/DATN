@@ -63,6 +63,7 @@
     <Compile Include="eBookDao\BookDao.cs" />
     <Compile Include="eBookDao\AccountDao.cs" />
     <Compile Include="eBookDao\BookManagerDao.cs" />
+    <Compile Include="eBookData\BookManagerModel.cs" />
     <Compile Include="eBookData\Class.cs" />
     <Compile Include="eBookData\Book.cs" />
     <Compile Include="eBookData\Account.cs" />

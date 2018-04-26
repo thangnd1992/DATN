@@ -64,7 +64,7 @@
                     <td>@item.ClassId</td>
                     <td>@item.Role</td>
                     <td>
-                        @if (item.Status == "active    ")
+                        @if (item.Status.Contains("active"))
                         {
                             <span>Đang hoạt động</span>
                         }

@@ -9,8 +9,7 @@ using System.Data.Entity.Spatial;
 
 namespace Model.eBookData
 {
-    [Table("BookManager")]
-    public partial class BookManager
+    public partial class BookManagerModel
     {
         public int Id { get; set; }
 
@@ -21,9 +20,7 @@ namespace Model.eBookData
         public DateTime? BorrowOn { get; set; }
 
         public DateTime? PayOn { get; set; }
-        [StringLength(250)]
         public string Name { get; set; }
-        [StringLength(250)]
         public string BookName { get; set; }
     }
 }

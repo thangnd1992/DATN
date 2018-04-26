@@ -131,6 +131,7 @@
         $('#bookId').val(id);
     }
     function borrowBook() {
+        debugger
         var bookId = $('#bookId').val();
         $.ajax({
             type: "POST",
