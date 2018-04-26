@@ -1,4 +1,5 @@
-﻿@model Model.eBookData.Account
+﻿@model eBookManager.Models.AccountModel
+
 @{
     ViewBag.Title = "EditAccount";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +7,7 @@
 
 <h2 class="margin-bot-20" style="text-align:center">Cập nhật tài khoản</h2>
 
-<form action="/Account/EditAccount" method="post">
+<form id="form-data" @*action="/Account/EditAccount" method="post"*@>
     <div class="col-lg-12 margin-bot-20" hidden>
         <div class="col-lg-4"><label class="pull-right pad-top-8">Id</label></div>
         <div class="col-lg-8">
@@ -19,6 +20,8 @@
             <input class="form-control width-300" disabled type="text" value="@Model.UserName" name="UserName" />
         </div>
     </div>
+    <input hidden value="@Model.Password" name="Password" />
+    <input hidden value="@Model.Status" name="Status" />
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8">Họ và tên</label></div>
         <div class="col-lg-8">
@@ -40,7 +43,12 @@
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8">Lớp</label></div>
         <div class="col-lg-8">
-            <input class="form-control width-300" type="text" value="@Model.ClassId" name="ClassId" />
+            <select name="ClassId" class="form-control width-300" style="height:34px">
+                @foreach (var cl in Model.Classes)
+                {
+                    <option value="@cl.Id" @(cl.Id == Model.ClassId ? "selected" : string.Empty)>@cl.ClassName</option>
+                }
+            </select>
         </div>
     </div>
     <div class="col-lg-12 margin-bot-20">
@@ -52,7 +60,25 @@
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8"></label></div>
         <div style="float:left;width:300px">
-            <button class="btn btn-primary pull-right" type="submit">Cập nhật</button>
+            <a class="btn btn-primary pull-right" onclick="editAccount()">Cập nhật</a>
         </div>
     </div>
 </form>
+<script>
+    function editAccount() {
+        $.ajax({
+            type: "POST",
+            url: '/Account/EditAccount?' + $("#form-data").serialize(),
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+                setTimeout(function () {
+                    window.location.href = "/Account/GetAllAccounts";
+                }, 1000);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+</script>

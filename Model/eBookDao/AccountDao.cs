@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Model.eBookData;
 using PagedList;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 
 namespace Model.eBookDao
 {
@@ -33,6 +35,7 @@ namespace Model.eBookDao
         public Account UpdateAccount(Account acc)
         {
             var account = GetAccountById(acc.Id);
+            account.Id = acc.Id;
             account.Address = acc.Address;
             account.ClassId = acc.ClassId;
             account.Email = acc.Email;
@@ -41,8 +44,26 @@ namespace Model.eBookDao
             account.UserName = acc.UserName;
             account.Name = acc.Name;
             account.Status = acc.Status;
-            eb.SaveChanges();
+            eb.Entry(account).State = EntityState.Modified;
+            try
+            {
+                eb.SaveChanges();
+            }
+            catch(DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
 
+            }
             return acc;
         }
 

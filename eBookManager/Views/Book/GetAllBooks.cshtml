@@ -9,11 +9,11 @@
 }
 <h2 class="margin-bot-20" style="text-align:center">Danh sách Tài liệu trong thư viện</h2>
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 @using (Html.BeginForm("GetAllBooks", "Book", FormMethod.Get))
 {
-    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px" placeholder="Tìm theo mã sách hoặc tên sách"/>
+    <input type="text" value="@ViewBag.SearchString" class="form-control" name="search" style="width:300px;float:left;margin-right:15px" placeholder="Tìm theo mã sách hoặc tên sách" />
     <button type="submit" class="btn btn-success">Tìm kiếm</button>
 }
 <table class="table table-hover">
@@ -35,54 +35,55 @@
                 var item = Model[i];
                 if (account.Role != "admin")
                 {
-                    <tr>
-                        <td>@(i+1)</td>
-                        <td>@item.BookCode</td>
-                        <td>@item.BookName.</td>
-                        <td>@item.BookAuthor</td>
-                        <td>@item.BookType</td>
-                        <td>@item.BookPublisher</td>
-                        <td>@item.BookNote</td>
-                        <td>
-                            <a class="btn btn-success" onclick="openPopupBorrowBook(@item.Id)">Mượn sách</a>
-                            <a class="btn btn-danger"  onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@item.BookCode</td>
+                    <td>@item.BookName.</td>
+                    <td>@item.BookAuthor</td>
+                    <td>@item.BookType</td>
+                    <td>@item.BookPublisher</td>
+                    <td>@item.BookNote</td>
+                    <td>
+                        <a class="btn btn-success" onclick="openPopupBorrowBook(@item.Id)">Mượn sách</a>
+                        <a class="btn btn-danger" onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
+                    </td>
+                </tr>
                 break;
-                }
-                else
-                {
-                    <tr>
-                        <td>@(i+1)</td>
-                        <td>@item.BookCode</td>
-                        <td>@item.BookName</td>
-                        <td>@item.BookAuthor</td>
-                        <td>@item.BookType</td>
-                        <td>@item.BookPublisher</td>
-                        <td>@item.BookNote</td>
-                        <td>
-                            <a class="btn btn-primary" href="/Book/EditBook?bookId=@item.Id">Sửa</a>
-                        </td>
-                        <td style="text-align:center">
-                            <a class="btn btn-success" onclick="openPopupQRCode(@item.Id)">Hiển thị QRCODE</a>
-                            <a class="btn btn-success" onclick="openPopupBorrowBook(@item.Id)">Mượn sách</a>
-                            <a class="btn btn-danger" onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
-                            <div hidden class="qrcode-@item.Id">@Html.GenerateQrCode(@item.BookCode + "--" + @item.BookName)</div>
-                        </td>
-                        <div class="modal fade" id="showQrCode-@item.Id" tabindex="-1" role="dialog" aria-labelledby="showQrCodeLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabe2">Mã QR CODE</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div style="text-align:center">@Html.GenerateQrCode(@item.BookCode + "--" + @item.BookName)</div>
+            }
+            else
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@item.BookCode</td>
+                    <td>@item.BookName</td>
+                    <td>@item.BookAuthor</td>
+                    <td>@item.BookType</td>
+                    <td>@item.BookPublisher</td>
+                    <td>@item.BookNote</td>
+                    <td>
+                        <a class="btn btn-primary" href="/Book/EditBook?bookId=@item.Id">Sửa</a>
+                    </td>
+                    <td style="text-align:center">
+                        <a class="btn btn-success" onclick="openPopupQRCode(@item.Id)">Hiển thị QRCODE</a>
+                        <a class="btn btn-success" onclick="openPopupBorrowBook(@item.Id)">Mượn sách</a>
+                        <a class="btn btn-danger" onclick="openPopupReturnBook(@item.Id)">Trả sách</a>
+                        <div hidden class="qrcode-@item.Id">@Html.GenerateQrCode(@item.BookCode + "--" + @item.BookName)</div>
+                    </td>
+                    <div class="modal fade" id="showQrCode-@item.Id" tabindex="-1" role="dialog" aria-labelledby="showQrCodeLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabe2">Mã QR CODE</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
                                 </div>
+                                <div style="text-align:center">@Html.GenerateQrCode(@item.BookCode + "--" + @item.BookName)</div>
                             </div>
-</tr>
-                }
+                        </div>
+                    </div>
+                </tr>
+            }
 
         }
 
@@ -142,13 +143,13 @@
             dataType: "json",
             success: function (response) {
                 $('#borrowBook').modal('hide');
-                
+
                 setTimeout(function(){
                     alert(response);
                 }, 500);
             },
             error: function (error) {
-                
+
             }
         });
     }
@@ -168,13 +169,13 @@
             dataType: "json",
             success: function (response) {
                 $('#returnBook').modal('hide');
-                
+
                 setTimeout(function(){
                     alert(response);
                 }, 500);
             },
             error: function (error) {
-                
+
             }
         });
     }

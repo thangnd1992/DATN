@@ -22,10 +22,12 @@ namespace eBookManager.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private AccountDao _accDao;
+        private ClassDao _classDao;
         public Account CurrentAccount;
         public AccountController()
         {
             _accDao = new AccountDao();
+            _classDao = new ClassDao();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -100,6 +102,7 @@ namespace eBookManager.Controllers
             {
                 var accounts = _accDao.ListAllPaging(search, page, pageSize);
                 ViewBag.SearchString = search;
+                ViewBag.Class = _classDao.GetAllClass();
                 return View(accounts);
             }
 
@@ -114,7 +117,18 @@ namespace eBookManager.Controllers
             else
             {
                 var account = _accDao.GetAccountById(accountId);
-                return View(account);
+                var model = new AccountModel();
+                model.Id = account.Id;
+                model.Email = account.Email;
+                model.Address = account.Address;
+                model.ClassId = account.ClassId;
+                model.Name = account.Name;
+                model.Password = account.Password;
+                model.Role = account.Role;
+                model.Status = account.Status;
+                model.UserName = account.UserName;
+                model.Classes = _classDao.GetAllClass();
+                return View(model);
             }
             
         }
@@ -123,11 +137,24 @@ namespace eBookManager.Controllers
         public ActionResult EditAccount(Account acc)
         {
             var ac = _accDao.GetAccountById(acc.Id);
-            acc.Password = ac.Password;
-            acc.Status = ac.Status;
-            acc.UserName = ac.UserName;
-            var account = _accDao.UpdateAccount(acc);
-            return View(account);
+            //acc.Password = ac.Password;
+            ac.Status = acc.Status;
+            ac.Email = acc.Email;
+            ac.Name = acc.Name;
+            ac.Address = acc.Address;
+            ac.Role = acc.Role;
+            ac.ClassId = acc.ClassId;
+            var str = "";
+            try
+            {
+                var result = _accDao.UpdateAccount(ac);
+                str = "Tài khoản đã được cập nhật thành công";
+            }
+            catch (Exception e)
+            {
+                str = "Có lỗi xảy ra";
+            }
+            return Json(str, JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult Create()
@@ -138,7 +165,9 @@ namespace eBookManager.Controllers
             }
             else
             {
-                return View(new Account());
+                var account = new AccountModel();
+                account.Classes = _classDao.GetAllClass();
+                return View(account);
             }
             
         }
@@ -147,8 +176,17 @@ namespace eBookManager.Controllers
         public ActionResult Create(Account acc)
         {
             acc.Password = Common.Encrypt.GetMD5(acc.Password);
-            var account = _accDao.InsertAccount(acc);
-            return View(account);
+            var str = "";
+            try
+            {
+                var result = _accDao.InsertAccount(acc);
+                str = "Tài khoản đã được tạo thành công";
+            }
+            catch(Exception e)
+            {
+                str = "Có lỗi xảy ra";
+            }
+            return Json(str, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         [AllowAnonymous]

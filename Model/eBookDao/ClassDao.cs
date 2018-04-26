@@ -48,7 +48,7 @@ namespace Model.eBookDao
                 return Class;
             return null;
         }
-        public List<Class> GetClasss()
+        public List<Class> GetAllClass()
         {
             return eb.Class.ToList();
         }
