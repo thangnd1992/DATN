@@ -192,5 +192,20 @@ namespace eBookManager.Controllers
             Session["CurrentAccount"] = null;
             return Json("Bạn đã đăng xuất thành công!");
         }
+
+        [AllowAnonymous]
+        public ActionResult AccountInfo()
+        {
+            if (Session["CurrentAccount"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                var account = Session["CurrentAccount"];
+                return View(account);
+            }
+
+        }
     }
 }
