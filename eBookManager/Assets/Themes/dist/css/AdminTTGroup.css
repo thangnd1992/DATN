@@ -749,8 +749,8 @@ table.text-center,table.text-center td,table.text-center th{text-align:center}
  * Page:Login & Register
  * ----------------------
  */
-.login-logo .showlogo{height:120px}
-@media (max-width:360px){.login-logo .showlogo{height:80px}}}
+.login-logo .showlogo{display: block; margin-left: auto; margin-right: auto;height:120px}
+@media (max-width:360px){.login-logo .showlogo{display: block; margin-left: auto; margin-right: auto;height:120px}}
 .login-logo,.register-logo{font-size:35px;text-align:center;margin-bottom:4px;font-weight:300}
 .login-logo a,.register-logo a{color:#444}
 .login-page,.register-page{background:#dfdfdf;/*background:#fad505;background-image:url('../img/BG.jpg');*/

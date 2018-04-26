@@ -234,6 +234,7 @@
     <Content Include="Assets\EmailTemplates\header-footer-image.png" />
     <Content Include="Assets\EmailTemplates\header-image.png" />
     <Content Include="Assets\EmailTemplates\text-only.png" />
+    <Content Include="Assets\Images\1.png" />
     <Content Include="Assets\Images\general.png" />
     <Content Include="Assets\Images\logo-Login.png" />
     <Content Include="Assets\Images\logo-sub.png" />
