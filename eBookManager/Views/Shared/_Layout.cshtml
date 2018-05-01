@@ -20,6 +20,7 @@
     <link href="~/Assets/css/datepicker.css" rel="stylesheet" />
     <link rel="shortcut icon" type="image/x-icon" href="~/library.ico" />
     <script src="~/Assets/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/highcharts-v5.0.6.js"></script>
     @{ 
         var account = (Model.eBookData.Account)Session["CurrentAccount"];
         var checkAdmin = account.Role != "admin";
@@ -35,7 +36,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Trang Chủ">
-                    <a class="nav-link" href="/Book/GetAllBooks">
+                    <a class="nav-link" href="/Home/Index">
                         <i class="fa fa-home"></i>
                         <span class="nav-link-text">Trang Chủ</span>
                     </a>
@@ -47,9 +48,9 @@
                     </a>
                     <ul class="sidenav-second-level collapse" id="collapseCharts">
                         <li @if (checkAdmin) {<text>hidden</text> }>
-                            <a href="navbar.html">
+                            <a href="/Manage/GetBookBorrowsById">
                                 <i class="fa fa-fw fa-area-chart"></i>
-                                <span>Người sử dụng</span>
+                                <span>Sách mượn nhiều nhất</span>
                             </a>
                         </li>
                         <li>

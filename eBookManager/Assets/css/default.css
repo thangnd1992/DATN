@@ -17,3 +17,45 @@ body.fixed-nav{
 .required{
     color:red;
 }
+.info-inday {
+    width: 100%;
+    margin-top: 15px;
+}
+.info-inday-box {
+    width: 40%;
+    float: left;
+}
+.content-info-today {
+    border: 1px solid #dbdbdb;
+    margin-right: 10px;
+    background-color: #fff;
+    height: 60px;
+    border-radius: 3px;
+}
+.info-box-today {
+    margin-top: 8px;
+    color: #686868;
+}
+.img-today {
+    float: left;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    padding-top: 5px;
+    padding-left: 15px;
+}
+.icon-order-dashboard {
+    width: 30px;
+    height: 30px;
+    fill: #08f;
+}
+.info-box .title {
+    font-size: 14px;
+    font-weight: 400;
+}
+.info-box .count {
+    font-size: 20px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

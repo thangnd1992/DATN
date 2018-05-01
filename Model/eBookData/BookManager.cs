@@ -25,5 +25,8 @@ namespace Model.eBookData
         public string Name { get; set; }
         [StringLength(250)]
         public string BookName { get; set; }
+        public int? BorrowOnKey { get; set; }
+        public int? PayOnKey { get; set; }
+
     }
 }

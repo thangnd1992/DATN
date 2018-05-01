@@ -51,13 +51,25 @@ namespace Model.eBookDao
         }
         public IEnumerable<BookManager> GetBookManagerBorrows (string query, DateTime? borrowOnMin, DateTime? borrowOnMax, int page, int pageSize = 10)
         {
-            var bookManager = eb.BookManager.SqlQuery("SELECT bm.Id,bm.AccountId, bm.BookId, bm.BorrowOn, bm.PayOn, a.Name, b.BookName FROM dbo.BookManager bm Join Account a On bm.AccountId = a.Id Join Book b On bm.BookId = b.Id Where a.Name like @p0 and @p1 < BorrowOn and @p2 > BorrowOn", new object[] { "%" + query + "%", borrowOnMin, borrowOnMax });
-            return bookManager.OrderByDescending(x => x.Id).ToPagedList(page, pageSize); ;
+            var bookManager = eb.BookManager.SqlQuery("SELECT bm.Id,bm.AccountId, bm.BookId, bm.BorrowOn, bm.PayOn,bm.BorrowOnkey, bm.PayOnKey, a.Name, b.BookName FROM dbo.BookManager bm Join Account a On bm.AccountId = a.Id Join Book b On bm.BookId = b.Id Where a.Name like @p0 and @p1 < BorrowOn and @p2 > BorrowOn", new object[] { "%" + query + "%", borrowOnMin, borrowOnMax });
+            return bookManager.OrderByDescending(x => x.Id).ToPagedList(page, pageSize);
         }
         public IEnumerable<BookManager> GetBookManagerPays(string query, DateTime? payOnMin, DateTime? payOnMax, int page, int pageSize = 10)
         {
-            var bookManager = eb.BookManager.SqlQuery("SELECT bm.Id,bm.AccountId, bm.BookId, bm.BorrowOn, bm.PayOn, a.Name, b.BookName FROM dbo.BookManager bm Join Account a On bm.AccountId = a.Id Join Book b On bm.BookId = b.Id Where a.Name like @p0 and @p1 < PayOn and @p2 > PayOn", new object[] { "%" + query + "%", payOnMin, payOnMax });
-            return bookManager.OrderByDescending(x => x.Id).ToPagedList(page, pageSize); ;
+            var bookManager = eb.BookManager.SqlQuery("SELECT bm.Id,bm.AccountId, bm.BookId, bm.BorrowOn, bm.PayOn,bm.PayOn,bm.BorrowOnkey, bm.PayOnKey, a.Name, b.BookName FROM dbo.BookManager bm Join Account a On bm.AccountId = a.Id Join Book b On bm.BookId = b.Id Where a.Name like @p0 and @p1 < PayOn and @p2 > PayOn", new object[] { "%" + query + "%", payOnMin, payOnMax });
+            return bookManager.OrderByDescending(x => x.Id).ToPagedList(page, pageSize);
+        }
+        public IEnumerable<BookManagerModel> GetBookManagerById(DateTime? borrowOnMin, DateTime? borrowOnMax, int page, int pageSize = 10)
+        {
+            //var param = new object[] { new SqlParameter("@borrowOnMin", borrowOnMin) , new SqlParameter("@borrowOnMax", borrowOnMax) };      
+            var result = eb.Database.SqlQuery<BookManagerModel>("dbo.GetCountBookById @p0, @p1", borrowOnMin, borrowOnMax);
+            return result.OrderByDescending(x => x.IntCount).ToPagedList(page, pageSize);
+        }
+        public List<BookManagerModel> GetBookManagerByTime(DateTime? borrowOnMin, DateTime? borrowOnMax)
+        {
+            //var param = new object[] { new SqlParameter("@borrowOnMin", borrowOnMin) , new SqlParameter("@borrowOnMax", borrowOnMax) };      
+            var result = eb.Database.SqlQuery<BookManagerModel>("dbo.GetCountBookByTime @p0, @p1", borrowOnMin, borrowOnMax);
+            return result.ToList();
         }
     }
 }
