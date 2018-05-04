@@ -1,0 +1,196 @@
+﻿@using PagedList.Mvc;
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var account = (Model.eBookData.Account)Session["CurrentAccount"];
+}
+<h2 class="margin-bot-20" style="text-align:center">Thống kê đầu sách được mượn theo thời gian</h2>
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<form id="form-data" action="/Manage/GetBookBorrowsById" method="post">
+    <label style="float:left;margin-right:15px;margin-top:8px">Từ ngày</label>
+    <input type="text" value="@ViewBag.borrowOnMin" class="form-control datepicker" name="borrowOnMin" style="width:200px;float:left;margin-right:15px">
+    <label style="float:left;margin-right:15px;margin-top:8px">Đến ngày</label>
+    <input type="text" value="@ViewBag.borrowOnMax" class="form-control datepicker" name="borrowOnMax" style="width:200px;float:left;margin-right:15px">
+    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+</form>
+<div id="top-sale" style="margin-top:30px;margin-left:100px">
+
+</div>
+<script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+            });
+            $.ajax({
+                type: "POST",
+                url: '/Manage/GetBookBorrowsByIdData?' + $("#form-data").serialize(),
+                dataType: "json",
+                success: function (model) {
+                    var topData = model.error ? [] : $.map(model, function (m) {
+                        return {
+                            data: m.IntCount,
+                            categories: m.BookName,
+
+                        };
+                    });
+                    var type = "Số lượng";
+                    var data10bind = [];
+                    var top10Categories = [];
+                    var maxValue = topData[0] == undefined ? 0 : topData[0].data;
+                    for (var i = 0; i < 10; i++) {
+                        if (typeof topData[i] !== "undefined") {
+                            data10bind[i] = topData[i].data;
+
+                            top10Categories[i] = topData[i].categories;
+                        }
+
+                    }
+                    bindTopSalesChart(data10bind, top10Categories, maxValue, type);
+                },
+                error: function (error) {
+
+                }
+            });
+           
+            function bindTopSalesChart(data10bind, top10Categories, maxValue,type) {
+                if (maxValue == 0) {
+                    $('#top-sale').css("height", 320);
+                    $('#top-sale').css("background-color", "white");
+                    return;
+                }
+                $(function () {
+                    Highcharts.setOptions({
+                        lang: {
+                            numericSymbols: ['K', 'M', 'B', 'T', 'P', 'E'],
+                            thousandsSep: ','
+                        }
+                    });
+                    $('#top-sale').highcharts({
+                        chart: {
+                            type: 'column',
+                            width: 600
+                        },
+                        title: {
+                            text: "Sách mượn nhiều nhất",
+                            style: {
+
+                                "fontFamily": "Arial"
+                            },
+                            useHTML: true,
+                            y: 15
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        labels: {
+                            item: {
+
+                                style: {
+                                    left: '10px',
+                                    bottom: '40px'
+                                }
+                            }
+                        },
+                        xAxis: {
+                            //categories: ['Quần bò', 'Áo phông', 'Áo ba lỗ', 'Dép tổ ong', 'Giày converse'],
+                            categories: top10Categories,
+
+                            labels: {
+                                //autoRotation: [90],
+                                //enabled: true,
+                                //formatter: function () {
+                                //    var name;
+                                //    if (this.value.toString().length < 8) {
+                                //        name = this.value.toString()
+                                //    }
+                                //    else {
+                                //        name = this.value.toString().substring(0, 9) + "...";
+                                //    }
+                                //    //return name;
+                                //    return '<div data-toggle="tooltip" data-placement="bottom" title ="' + this.value + '">' + name + '</div>';
+                                //},
+                                //staggerLines: 1,
+                                //style: {
+
+                                //    whiteSpace: 'nowrap'
+                                //},
+                                useHTML: true
+                            }
+                        },
+                        yAxis: {
+                            min: 0,
+                            max: maxValue,
+
+                            lineColor: '#ffffff',
+                            tickLength: 0,
+                            gridLineWidth: 0,
+                            title: {
+                                text: null
+                            },
+                            lineColor: "#C0D0E0",
+                            lineWidth: 1
+                        },
+                        exporting: {
+                            buttons: {
+                                contextButton: {
+                                    enabled: false
+                                }
+                            }
+                        },
+                        legend: {
+                            y: -10,
+                            itemStyle: {
+                                color: '#000000',
+                                fontWeight: 'bold',
+                                fontFamily: 'Arial'
+
+                            }
+                        },
+                        plotOptions: {
+                            column: {
+
+                                borderWidth: 0
+                            },
+                            series: {
+
+                                dataLabels: {
+                                    useHTML: true,
+                                    enabled: true,
+                                    style: {
+                                        color: '#000000',
+                                        fontSize: '8px',
+                                        fontFamily: 'Arial'
+                                    },
+                                    align: 'center',
+                                    x: 0,
+                                    y: -5,
+                                    verticalAlign: 'middle',
+                                    overflow: true,
+                                    crop: false,
+
+                                },
+                            },
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [{
+                            //showInLegend: false,
+                            name: type,
+                            data: data10bind,
+                            color: '#428BCA',
+                            zIndex: 1,
+
+                        }],
+                    });
+
+                })
+            }
+        });
+</script>
+
+

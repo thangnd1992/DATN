@@ -68,17 +68,3 @@ C:\Users\thuongpd\DATN\Model\obj\Debug\Model.dll
 C:\Users\thuongpd\DATN\Model\obj\Debug\Model.pdb
 C:\Users\thuongpd\DATN\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Desktop\DATN\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\Model.dll.config
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\Model.dll
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\Model.pdb
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\EntityFramework.dll
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\PagedList.dll
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\PagedList.Mvc.dll
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\EntityFramework.xml
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\PagedList.xml
-C:\Users\Administrator\Desktop\DATN\DATN\Model\bin\Debug\PagedList.Mvc.xml
-C:\Users\Administrator\Desktop\DATN\DATN\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
-C:\Users\Administrator\Desktop\DATN\DATN\Model\obj\Debug\Model.dll
-C:\Users\Administrator\Desktop\DATN\DATN\Model\obj\Debug\Model.pdb
