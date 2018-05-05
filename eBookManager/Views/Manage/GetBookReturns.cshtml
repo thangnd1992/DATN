@@ -58,7 +58,7 @@
                         <td>@(i + 1)</td>
                         <td>@item.Name</td>
                         <td>@item.BookName</td>
-                        <td>@item.BorrowOn.Value.ToString("dd/MM/yyyy")</td>
+                        <td>@item.BorrowOn.ToString("dd/MM/yyyy")</td>
                         <td>@(item.PayOn == null ? "" : item.PayOn.Value.ToString("dd/MM/yyyy"))</td>
 
                     </tr>
