@@ -25,11 +25,19 @@ namespace eBookManager.Controllers
             }
             else
             {
-                ViewBag.CountAccount = _accDao.GetAccounts().Count;
-                ViewBag.CountBook = _bookDao.GetBooks().Count;
-                ViewBag.borrowOnMin = DateTime.Now.AddMonths(-1).ToString("dd/MM/yyyy");
-                ViewBag.borrowOnMax = DateTime.Now.ToString("dd/MM/yyyy");
-                return View();
+                var acc = (Account)Session["CurrentAccount"];
+                if(acc.Role == "admin")
+                {
+                    ViewBag.CountAccount = _accDao.GetAccounts().Count;
+                    ViewBag.CountBook = _bookDao.GetBooks().Count;
+                    ViewBag.borrowOnMin = DateTime.Now.AddMonths(-1).ToString("dd/MM/yyyy");
+                    ViewBag.borrowOnMax = DateTime.Now.ToString("dd/MM/yyyy");
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("GetAllBooks", "Book");
+                }
             }
         }
 
