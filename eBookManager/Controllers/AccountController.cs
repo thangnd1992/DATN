@@ -218,20 +218,9 @@ namespace eBookManager.Controllers
         public ActionResult ChangePassword(string Password)
         {
             var acc = (Account)Session["CurrentAccount"];
-            
-            
-            var str = "";
-            try
-            {
-                acc.Password = Encrypt.GetMD5(Password);
-                var account = _accDao.UpdateAccount(acc);
-                str = "Cập nhật mật khẩu thành công";
-            }
-            catch (Exception e)
-            {
-                str = "Có lỗi xảy ra";
-            }
-            return Json(str, JsonRequestBehavior.AllowGet);
+            acc.Password = Encrypt.GetMD5(Password);
+            var account = _accDao.UpdateAccount(acc);
+            return View(account);
         }
 
         [HttpPost]
