@@ -20,6 +20,7 @@ namespace Model.eBookDao
         public BookManager BorrowBook (BookManager bookManager)
         {
             bookManager.BorrowOn = DateTime.Now;
+            bookManager.BorrowOnKey = Int32.Parse(DateTime.Now.ToString("yyyyMMdd"));
             eb.BookManager.Add(bookManager);
             //eb.BookManager.Attach(bookManager);
             eb.Entry(bookManager).State = EntityState.Added;
@@ -30,6 +31,7 @@ namespace Model.eBookDao
         {
             var book = eb.BookManager.Where(o => o.AccountId == bookManager.AccountId && o.BookId == bookManager.BookId).FirstOrDefault();
             book.PayOn = DateTime.Now;
+            bookManager.PayOnKey = Int32.Parse(DateTime.Now.ToString("yyyyMMdd"));
             eb.Entry(book).State = EntityState.Modified;
             eb.SaveChanges();
             return bookManager;

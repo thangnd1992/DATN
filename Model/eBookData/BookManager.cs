@@ -18,7 +18,7 @@ namespace Model.eBookData
 
         public int BookId { get; set; }
 
-        public DateTime? BorrowOn { get; set; }
+        public DateTime BorrowOn { get; set; }
 
         public DateTime? PayOn { get; set; }
         [StringLength(250)]

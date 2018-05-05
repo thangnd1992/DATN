@@ -219,7 +219,7 @@
                         height: 320
                     },
                     title: {
-                        text: null,
+                        text: 'Biểu đồ mượn sách theo thời gian',
                         style: {
 
                             "fontFamily": "Arial"
@@ -264,9 +264,11 @@
                     },
 
                     tooltip: {
+                        //xDateFormat: '<b> Ngày {%d/%m/%Y}</b><br />',
+                        pointFormat: ' Số lượng mượn = {point.y}',
                         shared: true,
                         //xDateFormat: '%d-%m-%Y %H:%M'
-                        xDateFormat: '%d/%m/%Y',
+                        xDateFormat: 'Ngày '+ '%d/%m/%Y',
                         borderWidth: 1,
                         backgroundColor: "rgba(255,255,255,1)",
                         shadow: false,
@@ -279,8 +281,11 @@
                             }
                         }
                     },
+                    credits: {
+                        enabled: false
+                    },
 
-                    series: series
+                    series: series,
                 }, function (chart) { // on complete
 
                 });
