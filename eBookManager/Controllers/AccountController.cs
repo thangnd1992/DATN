@@ -240,6 +240,7 @@ namespace eBookManager.Controllers
             }
             else
             {
+                ViewBag.Class = _classDao.GetAllClass();
                 var account = (Account)Session["CurrentAccount"];
                 var info = _accDao.GetAccountById(account.Id);
                 return View(info);

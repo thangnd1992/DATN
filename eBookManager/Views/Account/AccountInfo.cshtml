@@ -1,8 +1,11 @@
 ﻿@model Model.eBookData.Account
+@using Model.eBookData
 @{
     ViewBag.Title = "EditAccount";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var account = (Model.eBookData.Account)Session["CurrentAccount"];
+    var listClass = (List<Class>)ViewBag.Class;
+    var cl = listClass.Where(o => o.Id == Model.ClassId).FirstOrDefault();
 }
 
 <h2 class="margin-bot-20" style="text-align:center">Thông tin người dùng</h2>
@@ -25,7 +28,8 @@
     </div>
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-6"><label class="pull-right pad-top-8">Lớp học :</label></div>
-        <div class="col-lg-1"><label class="pull-right pad-top-8">@Model.ClassId</label></div>
+        <div class="col-lg-1"><label class="pull-right pad-top-8">@cl.ClassName</label></div>
+
     </div>
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-6"><label class="pull-right pad-top-8">Quyền tài khoản :</label></div>
