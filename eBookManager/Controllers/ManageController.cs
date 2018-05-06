@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using eBookManager.Models;
 using Model.eBookData;
 using Model.eBookDao;
+using System.Collections.Generic;
 
 namespace eBookManager.Controllers
 {
@@ -60,7 +61,11 @@ namespace eBookManager.Controllers
         {
             var account = (Account)Session["CurrentAccount"];
             var borrowMin = borrowOnMin == null ? DateTime.Now.AddMonths(-1) : DateTime.ParseExact(borrowOnMin,"dd/MM/yyyy",null);
-            var borrowMax = borrowOnMax == null ? DateTime.Now : DateTime.ParseExact(borrowOnMax, "dd/MM/yyyy", null).AddHours(23); 
+            var borrowMax = borrowOnMax == null ? DateTime.Now : DateTime.ParseExact(borrowOnMax, "dd/MM/yyyy", null).AddHours(23);
+            if (account.Role != "admin")
+            {
+                query = account.Name;
+            }
             var bookManager = _bookManagerDao.GetBookManagerBorrows(query, borrowMin, borrowMax, page);
             ViewBag.SearchString = query;
             ViewBag.borrowOnMin = borrowMin.ToString("dd/MM/yyyy");
@@ -73,6 +78,10 @@ namespace eBookManager.Controllers
             var account = (Account)Session["CurrentAccount"];
             var payMin = payOnMin == null ? DateTime.Now.AddMonths(-1) : DateTime.ParseExact(payOnMin, "dd/MM/yyyy", null);
             var payMax = payOnMax == null ? DateTime.Now : DateTime.ParseExact(payOnMax, "dd/MM/yyyy", null).AddHours(23);
+            if (account.Role != "admin")
+            {
+                query = account.Name;
+            }
             var bookManager = _bookManagerDao.GetBookManagerPays(query, payMin, payMax, page);
             ViewBag.SearchString = query;
             ViewBag.payOnMin = payMin.ToString("dd/MM/yyyy");

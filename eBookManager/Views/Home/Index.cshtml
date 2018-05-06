@@ -164,134 +164,137 @@
         </div>
     </div>
 </div>
-<form id="form-data" action="/Manage/GetBookBorrowsById" method="post">
-    <label style="float:left;margin-right:15px;margin-top:8px">Từ ngày</label>
+<form id="form-data" @*action="/Manage/GetBookBorrowsByTimeData" method="post"*@>
+    <label style="float:left;margin-right:15px;margin-top:8px;margin-left:20%">Từ ngày</label>
     <input type="text" value="@ViewBag.borrowOnMin" class="form-control datepicker" name="borrowOnMin" style="width:200px;float:left;margin-right:15px">
     <label style="float:left;margin-right:15px;margin-top:8px">Đến ngày</label>
     <input type="text" value="@ViewBag.borrowOnMax" class="form-control datepicker" name="borrowOnMax" style="width:200px;float:left;margin-right:15px">
-    <button type="submit" class="btn btn-success">Tìm kiếm</button>
+    <a onclick="getData()" class="btn btn-success">Tìm kiếm</a>
 </form>
 <div id="top-sale" style="margin-top:30px;margin-left:100px">
 
 </div>
 <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
             $('.datepicker').datepicker({
                 format: 'dd/mm/yyyy',
             });
-            $.ajax({
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                url: '/Manage/GetBookBorrowsByTimeData?' + $("#form-data").serialize(),
-                dataType: "json",
-                success: function (model) {
-                    var series = [];
-                    var model1 = {};
-                    model1.name = '';
-                    model1.data = model.error ? [] : $.map(model, function (item) {
-                        time = Date.parse(item.BorrowOnKeyString);
-                        return {
-                            x: time,
-                            y: item.IntCount,
-                        };
-                    }).reverse();
-                    series.push(model1);
-                    
-                    bindTopSalesChart(series,0);
-                },
-                error: function (error) {
+            getData();           
+    });
+    function getData() {
+        $.ajax({
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            url: '/Manage/GetBookBorrowsByTimeData?' + $("#form-data").serialize(),
+            dataType: "json",
+            success: function (model) {
+                var series = [];
+                var model1 = {};
+                model1.name = 'Số lượng';
+                model1.data = model.error ? [] : $.map(model, function (item) {
+                    time = Date.parse(item.BorrowOnKeyString);
+                    return {
+                        x: time,
+                        y: item.IntCount,
+                    };
+                }).reverse();
+                series.push(model1);
 
-                }
-            });
+                bindTopSalesChart(series, 0);
+            },
+            error: function (error) {
 
-            function bindTopSalesChart(series, minY) {
-               
-                Highcharts.setOptions({
-                    lang: {
-                        numericSymbols: ['K', 'M', 'B', 'T', 'P', 'E'],
-                        thousandsSep: ','
-                    }
-                });
-                $('#top-sale').highcharts({
-
-                    chart: {
-                        type: 'line',
-                        height: 320
-                    },
-                    title: {
-                        text: 'Biểu đồ mượn sách theo thời gian',
-                        style: {
-
-                            "fontFamily": "Arial"
-                        },
-                        useHTML: true
-                    },
-
-                    xAxis: {
-                        type: 'datetime',
-                        labels: {
-                            format: '{value:%d/%m}',
-                        },
-
-                        tickInterval: 60 * 60 * 24 * 1000 * 7,
-
-                        title: {
-                            enabled: false
-                        }
-                    },
-                    yAxis: {
-                        title: {
-                            enabled: false
-                        },
-                        min: minY,
-                    },
-
-                    legend: {
-                        itemStyle: {
-                            color: '#000000',
-                            fontWeight: 'bold',
-                            fontFamily: 'Arial'
-
-                        },
-                        width: 400,
-                        align: "center",
-                        x: 120,
-                        y: -15,
-                        useHTML: true,
-                        labelFormatter: function () {
-                            return '<div style="text-align: left; width:90px;text-overflow: ellipsis;overflow: hidden;padding-top:2px;"  data-toggle="tooltip" data-placement="bottom" title ="' + this.name + '">' + this.name + '</div>';
-                        }
-                    },
-
-                    tooltip: {
-                        //xDateFormat: '<b> Ngày {%d/%m/%Y}</b><br />',
-                        pointFormat: ' Số lượng mượn = {point.y}',
-                        shared: true,
-                        //xDateFormat: '%d-%m-%Y %H:%M'
-                        xDateFormat: 'Ngày '+ '%d/%m/%Y',
-                        borderWidth: 1,
-                        backgroundColor: "rgba(255,255,255,1)",
-                        shadow: false,
-                        useHTML: true,
-                    },
-                    exporting: {
-                        buttons: {
-                            contextButton: {
-                                enabled: false
-                            }
-                        }
-                    },
-                    credits: {
-                        enabled: false
-                    },
-
-                    series: series,
-                }, function (chart) { // on complete
-
-                });
-                $(function () {
-                    $('div#line-chart>div > svg >text').css("font-size", "0");
-                });
             }
         });
+    }
+
+    function bindTopSalesChart(series, minY) {
+
+        Highcharts.setOptions({
+            lang: {
+                numericSymbols: ['K', 'M', 'B', 'T', 'P', 'E'],
+                thousandsSep: ','
+            }
+        });
+        $('#top-sale').highcharts({
+
+            chart: {
+                type: 'line',
+                height: 320
+            },
+            title: {
+                text: 'Biểu đồ mượn sách theo thời gian',
+                style: {
+
+                    "fontFamily": "Arial"
+                },
+                useHTML: true
+            },
+
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    format: '{value:%d/%m}',
+                },
+
+                //tickInterval: 60 * 60 * 24 * 1000 * 7,
+
+                title: {
+                    enabled: false
+                }
+            },
+            yAxis: {
+                title: {
+                    enabled: false
+                },
+                min: minY,
+            },
+
+            legend: {
+                itemStyle: {
+                    color: '#000000',
+                    fontWeight: 'bold',
+                    fontFamily: 'Arial'
+
+                },
+                width: 400,
+                align: "center",
+                x: 120,
+                y: -15,
+                useHTML: true,
+                labelFormatter: function () {
+                    return '<div style="text-align: left; width:90px;text-overflow: ellipsis;overflow: hidden;padding-top:2px;"  data-toggle="tooltip" data-placement="bottom" title ="' + this.name + '">' + this.name + '</div>';
+                }
+            },
+
+            tooltip: {
+                //xDateFormat: '<b> Ngày {%d/%m/%Y}</b><br />',
+                pointFormat: ' Số lượng mượn = {point.y}',
+                shared: true,
+                //xDateFormat: '%d-%m-%Y %H:%M'
+                xDateFormat: 'Ngày ' + '%d/%m/%Y',
+                borderWidth: 1,
+                backgroundColor: "rgba(255,255,255,1)",
+                shadow: false,
+                useHTML: true,
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        enabled: false
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+
+            series: series,
+        }, function (chart) { // on complete
+
+        });
+        $(function () {
+            $('div#line-chart>div > svg >text').css("font-size", "0");
+        });
+    }
 </script>

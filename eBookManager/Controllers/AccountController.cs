@@ -220,7 +220,7 @@ namespace eBookManager.Controllers
             var acc = (Account)Session["CurrentAccount"];
             acc.Password = Encrypt.GetMD5(Password);
             var account = _accDao.UpdateAccount(acc);
-            return View(account);
+            return Json("Bạn đã thay đổi thành công", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
