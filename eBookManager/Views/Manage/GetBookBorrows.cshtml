@@ -50,7 +50,7 @@
         }
 
     </tbody>
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @query = @ViewBag.SearchString, @borrowOnMin = @ViewBag.borrowOnMin, @borrowOnMax = @ViewBag.borrowOnMax }))
+    @Html.PagedListPager(Model, page => Url.Action("GetBookBorrows", new { page, @query = @ViewBag.SearchString, @borrowOnMin = @ViewBag.borrowOnMin, @borrowOnMax = @ViewBag.borrowOnMax }))
 </table>
 <script>
     $(document).ready(function () {

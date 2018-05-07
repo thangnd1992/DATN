@@ -88,7 +88,7 @@ namespace eBookManager.Controllers
         public ActionResult EditClass(Class acc)
         {
             var Class = _classDao.UpdateClass(acc);
-            return View(Class);
+            return Json("Cập nhật thành công!", JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult Create()
@@ -108,7 +108,7 @@ namespace eBookManager.Controllers
         public ActionResult Create(Class acc)
         {
             var Class = _classDao.InsertClass(acc);
-            return View(Class);
+            return Json("Thêm mới thành công!", JsonRequestBehavior.AllowGet);
         }
     }
 }

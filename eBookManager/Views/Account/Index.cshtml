@@ -7,27 +7,16 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="/Assets/Themes/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/Assets/Themes/bootstrap/fonts/font-awesome.css">
     <link rel="stylesheet" href="/Assets/Themes/bootstrap/fonts/ionicons.min.css">
     <link rel="stylesheet" href="/Assets/Themes/dist/css/AdminTTGroup.css">
     <link rel="stylesheet" href="/Assets/Themes/plugins/iCheck/square/blue.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="/Assets/Themes/plugins/html5shiv.min.js"></script>
-    <script src="/Assets/Themes/plugins/respond.min.js"></script>
-    <![endif]-->
     <link rel="shortcut icon" type="image/x-icon" href="/Assets/images/logo-sub.png" />
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
-
-        <!-- /.login-logo -->
         <div class="login-box-body">
             <form action="/Account/Login" method="post">
                 @Html.AntiForgeryToken()
@@ -41,30 +30,13 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
-                    @*<div class="col-xs-7">
-                            <div class="checkbox" style="display:inherit;margin-top:0px!important;margin-bottom:10px!important;">
-                                <label>
-                                    @Html.CheckBoxFor(m => m.RememberMe)&nbsp;<span style="color:#fff;padding-top:4px;line-height:23px;">  Nhớ mật khẩu?</span>
-                                </label>
-                            </div>
-                        </div>*@
-                    <!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Đăng nhập</button>
                     </div>
-                    <!-- /.col -->
                 </div>
             </form>
-            @*@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
-                {
-
-                }*@
-            <!-- /.social-auth-links -->
         </div>
-        <!-- /.login-box-body -->
     </div>
-    <!-- /.login-box -->
-    <!-- jQuery 2.2.3 -->
     <script src="/Assets/Themes/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="/Assets/Themes/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">

@@ -6,7 +6,7 @@
 
 <h2 class="margin-bot-20" style="text-align:center">Thêm mới lớp</h2>
 
-<form action="/Class/Create" method="post">
+<form id="form-data" @*form action="/Class/Create" method="post"*@>
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8">Mã lớp</label></div>
         <div class="col-lg-8">
@@ -22,7 +22,26 @@
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8"></label></div>
         <div style="float:left;width:300px">
-            <button class="btn btn-primary pull-right" type="submit">Thêm mới</button>
+            <a class="btn btn-primary pull-right" onclick="createClass()">Thêm mới</a>
         </div>
     </div>
 </form>
+
+<script>
+    function createClass() {
+        $.ajax({
+            type: "POST",
+            url: '/Class/Create?' + $("#form-data").serialize(),
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+                setTimeout(function () {
+                    window.location.href = "/Class/GetAllClasss";
+                }, 1000);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+</script>

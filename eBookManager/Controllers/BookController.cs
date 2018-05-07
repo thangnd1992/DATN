@@ -93,7 +93,7 @@ namespace eBookManager.Controllers
         public ActionResult EditBook(Book acc)
         {
             var Book = _bookDao.UpdateBook(acc);
-            return View(Book);
+            return Json("Cập nhật sách thành công", JsonRequestBehavior.AllowGet);
         }
         [AllowAnonymous]
         public ActionResult Create()
@@ -113,7 +113,7 @@ namespace eBookManager.Controllers
         public ActionResult Create(Book acc)
         {
             var Book = _bookDao.InsertBook(acc);
-            return View(Book);
+            return Json("Thêm mới sách thành công", JsonRequestBehavior.AllowGet);
         }
         // Mượn sách
         [HttpPost]

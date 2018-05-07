@@ -6,7 +6,7 @@
 
 <h2 class="margin-bot-20" style="text-align:center">Cập nhật thông tin lớp</h2>
 
-<form action="/Class/EditClass" method="post">
+<form id="form-data" @*form action="/Class/EditClass" method="post"*@>
     <div class="col-lg-12 margin-bot-20" hidden>
         <div class="col-lg-4"><label class="pull-right pad-top-8">Id</label></div>
         <div class="col-lg-8">
@@ -28,7 +28,26 @@
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8"></label></div>
         <div style="float:left;width:300px">
-            <button class="btn btn-primary pull-right" type="submit">Cập nhật</button>
+            <a class="btn btn-primary pull-right" onclick="editClass()">Cập nhật</a>
         </div>
     </div>
 </form>
+
+<script>
+    function editClass() {
+        $.ajax({
+            type: "POST",
+            url: '/Class/EditClass?' + $("#form-data").serialize(),
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+                setTimeout(function () {
+                    window.location.href = "/Class/GetAllClasss";
+                }, 1000);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+</script>

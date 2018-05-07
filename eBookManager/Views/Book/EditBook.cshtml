@@ -6,14 +6,14 @@
 
 <h2 class="margin-bot-20" style="text-align:center">Cập nhật thông tin sách</h2>
 
-<form action="/Book/EditBook" method="post">
+<form id="form-data" @*form action="/Book/EditBook" method="post"*@>
     <div class="col-lg-12 margin-bot-20" hidden>
         <div class="col-lg-4"><label class="pull-right pad-top-8">ID</label></div>
         <div class="col-lg-8">
             <input class="form-control width-300" type="text" value="@Model.Id" name="Id" />
         </div>
     </div>
-        <div class="col-lg-12 margin-bot-20">
+    <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8">Mã sách</label></div>
         <div class="col-lg-8">
             <input class="form-control width-300" type="text" value="@Model.BookCode" name="BookCode" />
@@ -34,25 +34,44 @@
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8">Loại sách</label></div>
         <div class="col-lg-8">
-            <input class="form-control width-300" type="text" value="@Model.BookType" name="BookType"/>
+            <input class="form-control width-300" type="text" value="@Model.BookType" name="BookType" />
         </div>
     </div>
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8">Nhà xuất bản</label></div>
         <div class="col-lg-8">
-            <input class="form-control width-300" type="text" value="@Model.BookPublisher" name="BookPublisher"/>
+            <input class="form-control width-300" type="text" value="@Model.BookPublisher" name="BookPublisher" />
         </div>
     </div>
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8">Ghi chú</label></div>
         <div class="col-lg-8">
-            <input class="form-control width-300" type="text" value="@Model.BookNote" name="BookNote"/>
+            <input class="form-control width-300" type="text" value="@Model.BookNote" name="BookNote" />
         </div>
     </div>
     <div class="col-lg-12 margin-bot-20">
         <div class="col-lg-4"><label class="pull-right pad-top-8"></label></div>
         <div style="float:left;width:300px">
-            <button class="btn btn-primary pull-right" type="submit">Cập nhật</button>
+            <a class="btn btn-primary pull-right" onclick="editBook()">Cập nhật</a>
         </div>
     </div>
 </form>
+
+<script>
+    function editBook() {
+        $.ajax({
+            type: "POST",
+            url: '/Book/EditBook?' + $("#form-data").serialize(),
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+                setTimeout(function () {
+                    window.location.href = "/Book/GetAllBooks";
+                }, 1000);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+</script>
